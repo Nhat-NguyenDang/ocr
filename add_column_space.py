@@ -3,8 +3,8 @@
 import numpy as np
 import cv2
 
-working_dir = "temp/v3_2_pre_lesson/"
-space = 50
+working_dir = "temp/test_imgs/"
+space = 30
 # Reading image
 font = cv2.FONT_HERSHEY_COMPLEX
 img2 = cv2.imread(working_dir+'line_removed.jpg', cv2.IMREAD_COLOR)
@@ -60,21 +60,22 @@ for cnt in contours :
 
 # Showing the final image.
 cv2.imshow('image2', img2)
-def myFunc(e):
-	return e[0]
+def myFunc(x):
+	return x[0]
 
 x_coordinate.sort(key=myFunc)
-
+print(img2.shape)
 def insert_space(img, space):
-	a = 0
-	for coordinate in x_coordinate[1:-1]:
-		for i in range (1, space+1):
-			img = np.insert(img, coordinate[0]+space*a, 240, axis=1)
-		a += 1
+	space_matrix = np.full((space, 1), 240)
+	for index, coordinate in enumerate(x_coordinate[2:-15]):
+		# for i in range (1, space+1):
+		# 	img = np.insert(img, coordinate[0]+space*a, 240, axis=1)
+		img = np.insert(img, [coordinate[0]+space*index], space_matrix, axis=1)
 	return img
 
 
 img2 = insert_space(img2, space=space)
+print(img2.shape)
 cv2.imshow('after', img2)
 cv2.imwrite(working_dir+f'space_added_{space}.jpg', img2)
 # Exiting the window if 'q' is pressed on the keyboard.
