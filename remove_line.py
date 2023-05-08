@@ -34,9 +34,9 @@ def main(argv):
     cnts = cnts[0] if len(cnts) == 2 else cnts[1]
     for c in cnts:
         cv2.drawContours(image, [c], -1, (background,background,background), 7)
-
-    cv2.imshow('vertical line', detected_lines)
-    cv2.imwrite(working_dir+'vertical_line.jpg', detected_lines)
+    print(detected_lines.shape)
+    # cv2.imshow('vertical line', detected_lines)
+    # cv2.imwrite(working_dir+'vertical_line.jpg', detected_lines)
     # cv2.imshow('after vertical', image)
 
 
@@ -50,9 +50,8 @@ def main(argv):
     for c in cnts:
         cv2.drawContours(image, [c], -1, (background,background,background), 7)
 
-    cv2.imshow('horizontal line', detected_lines)
-
-    cv2.imshow('line delete', image)
+    # cv2.imshow('horizontal line', detected_lines)
+    # cv2.imshow('line delete', image)
 
     #Repair image
     repair_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (4,6))
@@ -61,11 +60,12 @@ def main(argv):
 
 
     cv2.imshow('result', result)
+    # Save result
+    # cv2.imwrite(working_dir+'line_removed.jpg', result)
+
     cv2.waitKey()
     cv2.destroyWindow('hahaha')
 
-    # Save result
-    cv2.imwrite(working_dir+'line_removed.jpg', result)
 
 
 if __name__ == "__main__":

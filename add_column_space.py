@@ -46,14 +46,8 @@ for cnt in contours :
 			string = str(x) + " " + str(y)
 			# print(f"{x}, {y}")
 			if(i == 0):
-				# text on topmost co-ordinate.
-				# cv2.putText(img2, "Arrow tip", (x, y),
-				# 				font, 0.5, (255, 0, 0))
 				pass
 			else:
-				# text on remaining co-ordinates.
-				# cv2.putText(img2, string, (x, y),
-				# 		font, 0.5, (0, 255, 0))
 				x_coordinate.append([x,y])
 		i = i + 1
 
@@ -92,12 +86,11 @@ coords = cv2.findNonZero(gray) # Find all non-zero points (text)
 x, y, w, h = cv2.boundingRect(coords) # Find minimum spanning bounding box
 rect = img3[y-50:y+h+50, x-50:x+w+50] # Crop the image - note we do this on the original image
 
-cv2.imshow("Cropped", rect) # Show it
-cv2.imwrite("rect.png", rect) # Save the image
 
+#Resize to 1024x768 (recommended by GG Vision)
 resized_image = cv2.resize(rect, (1024, 768), cv2.INTER_LANCZOS4)
 cv2.imwrite("resized_image.png", resized_image)
-cv2.imshow("Resized", resized_image)
+# cv2.imshow("Resized", resized_image)
 
 # Dilate
 def thick_font(image):
@@ -109,7 +102,7 @@ def thick_font(image):
     return (image)
 
 dilated_image = thick_font(resized_image)
-cv2.imwrite("test.jpg", dilated_image)
+cv2.imwrite(working_dir+"final.jpg", dilated_image)
 # Exiting the window if 'q' is pressed on the keyboard.
 if cv2.waitKey(0) & 0xFF == ord('q'):
 	cv2.destroyAllWindows()
