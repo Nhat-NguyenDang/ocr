@@ -53,8 +53,6 @@ def main(argv):
     for c in cnts:
         cv2.drawContours(gray, [c], -1, (background,background,background), 12)
     cv2.imshow('vertical line', vertical_lines)
-    # cv2.imwrite(working_dir+'vertical_line.jpg', detected_lines)
-    # cv2.imshow('after vertical', image)
     _, threshold = cv2.threshold(vertical_lines, 110, 240, cv2.THRESH_BINARY)
 
     # Detecting contours in image.
@@ -84,8 +82,6 @@ def main(argv):
 
     x_coordinate.sort(key=myFunc)
 
-    print(x_coordinate)
-
     # Remove horizontal line
     # gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
     thresh = cv2.threshold(gray, 0, background, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
@@ -100,7 +96,6 @@ def main(argv):
     # cv2.imshow('line delete', image)
 
     cv2.imshow('result', gray)
-    print(gray.shape)
     # Save result
     # cv2.imwrite(working_dir+'line_removed.jpg', image)
     space_matrix = np.full((space, 1), background)
@@ -109,7 +104,6 @@ def main(argv):
 		# 	img = np.insert(img, coordinate[0]+space*a, 240, axis=1)
         gray = np.insert(gray, coordinate[0]+space*index, space_matrix, axis=1)
 
-    print(gray.shape)
     cv2.imshow('after', gray)
 
     # Cut off white space and resize to 1024 x 768 (recommended size)
@@ -127,11 +121,11 @@ def main(argv):
     #Resize to 1024x768 (recommended by GG Vision)
     resized_image = cv2.resize(rect, (1024, 768), cv2.INTER_LANCZOS4)
     # cv2.imwrite("resized_image.png", resized_image)
-    cv2.imshow("Resized", resized_image)
+    dilated_image = thick_font(resized_image)
+    cv2.imshow("Last", dilated_image)
     
     cv2.waitKey()
     cv2.destroyWindow('hahaha')
-
 
 
 if __name__ == "__main__":
