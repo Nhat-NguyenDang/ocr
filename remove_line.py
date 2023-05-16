@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import sys
-from noise_reduction import noise_reduce
+from needed_functions import noise_reduce
 import numpy as np
 
 space = 30
@@ -109,12 +109,9 @@ def main(argv):
     # Cut off white space and resize to 1024 x 768 (recommended size)
     # img = cv2.imread('temp/test_imgs/space_added_30.jpg') # Read in the image and convert to grayscale
     pre_cropping = gray[20:-20,20:-20] # Perform pre-cropping
-    print("precrop", pre_cropping.shape)
-    cv2.imshow("precrop", pre_cropping)
     pre_cropping = 255*(pre_cropping < 128).astype(np.uint8) # To invert the text to white
     pre_cropping = cv2.morphologyEx(pre_cropping, cv2.MORPH_OPEN, np.ones((2, 2), dtype=np.uint8)) # Perform noise filtering
     coords = cv2.findNonZero(pre_cropping) # Find all non-zero points (text)
-    print(coords.shape)
     x, y, w, h = cv2.boundingRect(coords) # Find minimum spanning bounding box
     rect = gray[y-50:y+h+50, x-50:x+w+50] # Crop the image - note we do this on the original image
 
@@ -123,6 +120,7 @@ def main(argv):
     # cv2.imwrite("resized_image.png", resized_image)
     dilated_image = thick_font(resized_image)
     cv2.imshow("Last", dilated_image)
+    cv2.imwrite(working_dir+"final.png", dilated_image)
     
     cv2.waitKey()
     cv2.destroyWindow('hahaha')
