@@ -1,2 +1,2 @@
 # ocr
-Some preprocessing function for image processing to use Google API OCR
+Some preprocessing function for image processing for OCR
